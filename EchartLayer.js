@@ -73,7 +73,8 @@ OpenLayers.Layer.EchartLayer = OpenLayers.Class(OpenLayers.Layer,
             // 添加 x、y  
             for (var i = 0, item; item = series[i++];) {  
                 var markPoint = item.markPoint || {};  
-                var markLine = item.markLine || {};  
+                var markLine = item.markLine || {}; 
+                console.log(markPoint);
   
                 var data = markPoint.data;  
                 if (data && data.length) {  
@@ -105,9 +106,10 @@ OpenLayers.Layer.EchartLayer = OpenLayers.Class(OpenLayers.Layer,
             return scope._option;  
         },  
         _AddPos:function(obj){  
-            var scope = this;  
+            var scope = this;
             var coord = scope._geoCoord[obj.name];  
-            var pos = scope.geoCoord2Pixel(coord);  
+            var pos = scope.geoCoord2Pixel(coord);
+            console.log(coord);  
             obj.x = pos[0]; //- self._mapOffset[0];  
             obj.y = pos[1]; //- self._mapOffset[1];  
         },  

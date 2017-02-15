@@ -699,6 +699,7 @@ define('echarts/echarts', [
             }
         },
         setOption: function (option, notMerge) {
+            console.log(option);
             if (!option.timeline) {
                 return this._setOption(option, notMerge);
             } else {
