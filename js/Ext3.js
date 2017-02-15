@@ -24,7 +24,7 @@ function Ext3(map, ec, canvas) {
     // div.style.left = 0;
     // map.getViewport().appendChild(div);
     this._echartsContainer = canvas;
-    this._init(map, ec);
+    this._init(map, ec, canvas);
 };
 
 /**
@@ -76,9 +76,10 @@ Ext3.prototype._mapOffset = [0, 0];
  * @param {echarts} ec
  * @private
  */
-Ext3.prototype._init = function(map, ec) {
+Ext3.prototype._init = function(map, ec,canvas) {
         var self = this;
         self._map = map;
+        console.log(self);
 
         /**
          * 获取echarts容器

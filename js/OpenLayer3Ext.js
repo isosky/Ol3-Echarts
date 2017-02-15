@@ -6,76 +6,76 @@
  */
 //define(function (require) {
 
-    /**
-     * 构造函数
-     *
-     * @param {String|HTMLElement|ol.Map} obj
-     * @param {echarts} ec
-     * @constructor
-     */
-    function OpenLayer3Ext(map,ec) {
-        this._map=map;
-        var size = map.getSize();
-        var div = this._echartsContainer = document.createElement('div');
-        div.style.position = 'absolute';
-        div.style.height = size[1] + 'px';
-        div.style.width = size[0] + 'px';
-        div.style.top = 0;
-        div.style.left = 0;
-        map.getViewport().appendChild(div);
-        this._init(map,ec);
-    };
+/**
+ * 构造函数
+ *
+ * @param {String|HTMLElement|ol.Map} obj
+ * @param {echarts} ec
+ * @constructor
+ */
+function OpenLayer3Ext(map, ec) {
+    this._map = map;
+    var size = map.getSize();
+    var div = this._echartsContainer = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.height = size[1] + 'px';
+    div.style.width = size[0] + 'px';
+    div.style.top = 0;
+    div.style.left = 0;
+    map.getViewport().appendChild(div);
+    this._init(map, ec);
+};
 
-    /**
-     * echarts 容器元素
-     *
-     * @type {HTMLElement}
-     * @private
-     */
-    OpenLayer3Ext.prototype._echartsContainer = null;
+/**
+ * echarts 容器元素
+ *
+ * @type {HTMLElement}
+ * @private
+ */
+OpenLayer3Ext.prototype._echartsContainer = null;
 
-    /**
-     * ol地图实例
-     *
-     * @type {BMap.Map}
-     * @private
-     */
-    OpenLayer3Ext.prototype._map = null;
+/**
+ * ol地图实例
+ *
+ * @type {BMap.Map}
+ * @private
+ */
+OpenLayer3Ext.prototype._map = null;
 
-    /**
-     * 使用的echarts实例
-     *
-     * @type {ECharts}
-     * @private
-     */
-    OpenLayer3Ext.prototype._ec = null;
+/**
+ * 使用的echarts实例
+ *
+ * @type {ECharts}
+ * @private
+ */
+OpenLayer3Ext.prototype._ec = null;
 
-    /**
-     * geoCoord
-     *
-     * @type {Object}
-     * @private
-     */
-    OpenLayer3Ext.prototype._geoCoord = [];
+/**
+ * geoCoord
+ *
+ * @type {Object}
+ * @private
+ */
+OpenLayer3Ext.prototype._geoCoord = [];
 
-    /**
-     * 记录地图的便宜量
-     *
-     * @type {Array.<number>}
-     * @private
-     */
-    OpenLayer3Ext.prototype._mapOffset = [0, 0];
+/**
+ * 记录地图的便宜量
+ *
+ * @type {Array.<number>}
+ * @private
+ */
+OpenLayer3Ext.prototype._mapOffset = [0, 0];
 
 
-    /**
-     * 初始化方法
-     *
-     * @param {String|HTMLElement|ol.Map} obj
-     * @param {BMap} BMap
-     * @param {echarts} ec
-     * @private
-     */
-    OpenLayer3Ext.prototype._init = function (map,ec) {
+/**
+ * 初始化方法
+ *
+ * @param {String|HTMLElement|ol.Map} obj
+ * @param {BMap} BMap
+ * @param {echarts} ec
+ * @private
+ */
+OpenLayer3Ext.prototype._init = function(map, ec) {
         var self = this;
         self._map = map;
 
@@ -85,7 +85,7 @@
          * @return {HTMLElement}
          * @public
          */
-        self.getEchartsContainer = function () {
+        self.getEchartsContainer = function() {
             return self._echartsContainer;
         };
 
@@ -95,7 +95,7 @@
          * @return {BMap.Map}
          * @public
          */
-        self.getMap = function () {
+        self.getMap = function() {
             return self._map;
         }
 
@@ -108,7 +108,7 @@
          * @return {Array.<number>}
          * @public
          */
-        self.geoCoord2Pixel = function (geoCoord) {
+        self.geoCoord2Pixel = function(geoCoord) {
             return self._map.getPixelFromCoordinate(ol.proj.fromLonLat(geoCoord));
         };
 
@@ -119,7 +119,7 @@
          * @return {Array.<number>}
          * @public
          */
-        self.pixel2GeoCoord = function (pixel) {
+        self.pixel2GeoCoord = function(pixel) {
             return self._map.getCoordinateFromPixel(pixel);
 
         };
@@ -130,7 +130,7 @@
          * @return {ECharts}
          * @public
          */
-        self.initECharts = function () {
+        self.initECharts = function() {
             self._ec = ec.init.apply(self, arguments);
             // console.log(arguments);
             self._bindEvent();
@@ -140,7 +140,7 @@
 
         // addMark wrap for get position from baidu map by geo location
         // by kener at 2015.01.08
-        self._addMarkWrap = function () {
+        self._addMarkWrap = function() {
             function _addMark(seriesIdx, markData, markType) {
                 var data;
                 if (markType == 'markPoint') {
@@ -150,8 +150,7 @@
                             self._AddPos(data[k]);
                         }
                     }
-                }
-                else {
+                } else {
                     data = markData.data;
                     if (data && data.length) {
                         for (var k = 0, len = data.length; k < len; k++) {
@@ -173,7 +172,7 @@
          * @return {ECharts}
          * @public
          */
-        self.getECharts = function () {
+        self.getECharts = function() {
             return self._ec;
         };
 
@@ -183,7 +182,7 @@
          * @return {Array.<number>}
          * @public
          */
-        self.getMapOffset = function () {
+        self.getMapOffset = function() {
             return self._mapOffset;
         };
 
@@ -194,7 +193,7 @@
          * @param {Object}
          * @public
          */
-        self.setOption = function (option, notMerge) {
+        self.setOption = function(option, notMerge) {
             var series = option.series || {};
 
             // 记录所有的geoCoord
@@ -239,11 +238,11 @@
          * @param {Object} obj  markPoint、markLine data中的项，必须有name
          * @param {Object} geoCoord
          */
-        self._AddPos = function (obj) {
+        self._AddPos = function(obj) {
             var coord = this._geoCoord[obj.name]
             var pos = this.geoCoord2Pixel(coord);
-            obj.x = pos[0] ;//- self._mapOffset[0];
-            obj.y = pos[1] ;//- self._mapOffset[1];
+            obj.x = pos[0]; //- self._mapOffset[0];
+            obj.y = pos[1]; //- self._mapOffset[1];
         };
 
         /**
@@ -251,7 +250,7 @@
          *
          * @private
          */
-        self._bindEvent = function () {
+        self._bindEvent = function() {
             //self._map.getView().on('change:resolution', _zoomChangeHandler('zoom'));
             self._map.getView().on('change:center', _moveHandler('moving'));
             self._map.on('moveend', _moveHandler('moving'));
@@ -276,14 +275,11 @@
          * @private
          */
         function _moveHandler(type) {
-            return function (e) {
+            return function(e) {
                 // 记录偏移量
                 var offsetEle =
                     self._echartsContainer.parentNode.parentNode.parentNode;
-                self._mapOffset = [
-                    -parseInt(offsetEle.style.left) || 0,
-                    -parseInt(offsetEle.style.top) || 0
-                ];
+                self._mapOffset = [-parseInt(offsetEle.style.left) || 0, -parseInt(offsetEle.style.top) || 0];
                 self._echartsContainer.style.left = self._mapOffset[0] + 'px';
                 self._echartsContainer.style.top = self._mapOffset[1] + 'px';
                 _fireEvent(type);
@@ -298,7 +294,7 @@
          * @private
          */
         function _dragZrenderHandler(isStart) {
-            return function () {
+            return function() {
                 self._map.dragging = isStart;
             }
         }
@@ -323,7 +319,7 @@
          *
          * @public
          */
-        self.refresh = function () {
+        self.refresh = function() {
             if (self._ec) {
                 var option = self._ec.getOption();
                 var component = self._ec.component || {};
@@ -343,4 +339,4 @@
         };
         return OpenLayer3Ext;
     }
-//});
+    //});

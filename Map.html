@@ -355,11 +355,13 @@
             }]
         };
         var olMapExt;
-        map.on('postcompose', function(e) {
+        map.on('precompose', function(e) {
             console.log(e.context.canvas);
             var canvas = e.context.canvas;
             var test = new Ext3(map, echarts,canvas);
-            test.setOption(option);
+            var container = test.getEchartsContainer();
+            var myChart = test.initECharts(container);
+            test.setOption(option,true);
             // console.log('aa');
             // if (olMapExt !== undefined)
             //     return;
